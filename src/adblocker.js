@@ -1,5 +1,6 @@
 /** @typedef {import('./blocklist.js').FiltersT} FiltersT */
 import getBlocklist from "./blocklist.js";
+import { runSiteUtils } from "./sites/index.js";
 
 /** @type {Map<Document, {observer: MutationObserver, lastRun: number}>} */
 var documentRegistry = new Map;
@@ -19,6 +20,10 @@ function blockInDocumentWithFilters(
   function shouldIgnore(/** @type {HTMLElement} */elem) {
     return (what.ignore?.selector ?? []).some(elem.matches, /*thisArg*/elem) || (what.ignore?.func ?? []).some(f => f(elem));
   }
+
+  // Website-specific utils work on the ad elements themselves, so they have to run
+  // before the generic filters get a chance to remove those elements.
+  runSiteUtils(document, shouldIgnore);
 
   var rm = {
     elem(/** @type {HTMLElement} */ elem) {

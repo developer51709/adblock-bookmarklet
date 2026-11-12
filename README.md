@@ -39,6 +39,7 @@ This project is split into 3 main parts:
 - The build script (`tools/build.ts`) - the script to build, minify, and output the code as a bookmarklet (you probably won't need to touch this most of the time)
 - The core (`src/adblocker.js`) - processes filter lists, walks into iframes, blocks elements, watches for changes
 - The filter lists (`src/blocklist.js`) - describes the HTML elements to block, exceptions to allow (modifying this will most of the time be sufficient to block an ad)
+- The site utils (`src/sites/`) - the element removal utility (`removeAdContainer.js`), which removes the element that holds an ad widget/frame, and its subutils for individual websites (e.g. `tomshardware.js`)
 
 ### Building
 Requirements:
